@@ -12,9 +12,8 @@ urlpatterns = [
     path('master', login_required(CreateProduct.as_view(), login_url='/login/'), name = 'add_product'),
     path('master/<int:pk>', login_required(UpdateProduct.as_view(), login_url='/login/'), name = 'edit_product'),
     path('delete_product/<int:pk>', login_required(DeleteProduct.as_view(), login_url='/login/'), name = 'delete_product'),
-    path('salir/', salir, name = 'salir'),
     path('register/',  register, name = 'register'),
-    path('login/', LoginView.as_view(template_name = 'login.html'), name='login'),
+    path('login/', login_required(LoginView.as_view(template_name = 'login.html'), login_url='/login/'), name='login'),
     path('logout/', LogoutView.as_view(template_name = 'logout.html'), name='logout'),
     path('contact_us', post, name = 'post'),
     path('historial/', sendRequest, name='historial')

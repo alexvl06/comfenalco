@@ -71,7 +71,26 @@ function table(){
         window.location.href = '/'
     }
 
- 
-
+    function send(){
+        function getCookie(name){
+            if(document.cookie && document.cookie !== ''){
+                var cookies = document.cookie.split(';')
+                for(var i=0; i<cookies.length; i++){
+                    var cookie = cookies.trim()
+                    if(cookie.substring(0,name.lenght+1)===(name+'=')){
+                        cookieValue = decodeURIComponent(cookie.substring(name.lenght))
+                        break;
+                    }
+                }
+            }
+            return cookieValue
+        }
+        fetch("historial/", {
+            method:"POST",
+            body: {},
+            headers:{
+                "X_CSRFToken": getCookie('csrftoken')
+            }
+        })
+    }
 }
-

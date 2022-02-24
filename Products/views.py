@@ -6,8 +6,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def about(request):
     return render(request, 'about.html' )
 
@@ -41,9 +43,7 @@ class buying(ListView):
     model = product
     template_name = 'buying.html'
 
-def salir(request):
-    logout(request)
-    return redirect('home')
+
 
 def register(request):
     if request.method == 'POST':
@@ -58,6 +58,7 @@ def register(request):
     context = {'form': form}
     return render(request, 'register.html', context )
 
+@login_required
 def post(request):
     current_user = get_object_or_404(User, pk=request.user.pk)
     if request.method == 'POST':
@@ -72,7 +73,10 @@ def post(request):
         form = PostForm()
     return render(request, 'contactanos.html', {'form': form})
 
-def sendRequest(request ):   
+@login_required
+def sendRequest(request ):  
+    if request.method == 'POST':
+        print(request) 
     user = request.user
     solicitudes = user.requests.all()
     return render(request, 'historial.html', {'user':user, 'requests':solicitudes})
