@@ -16,6 +16,15 @@
 
 </head>
 <body style="background-color: #212121;">
+    
+	{%if messages%}
+    {%for message in messages%}
+    <div class="notification {{message.tags}}">
+        {{message}}
+    </div>
+    {%endfor%}
+    {%endif%}
+
 
     {% include 'partials/_navbar.html' %}
     <div class="container p-5 text-light">

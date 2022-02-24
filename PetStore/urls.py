@@ -15,18 +15,9 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
 from django.urls import path, include
-from Products.views import CreateProduct, UpdateProduct, DeleteProduct, ListProduct, about, buying, salir
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('about', about),
-    path('', login_required(ListProduct.as_view(), login_url='/accounts/login/'), name= 'home'),
-    path('buying', login_required(buying.as_view(), login_url='/accounts/login/'), name='confirmar_compra'),
-    path('master', login_required(CreateProduct.as_view(), login_url='/accounts/login/'), name = 'add_product'),
-    path('master/<int:pk>', login_required(UpdateProduct.as_view(), login_url='/accounts/login/'), name = 'edit_product'),
-    path('delete_product/<int:pk>', login_required(DeleteProduct.as_view(), login_url='/accounts/login/'), name = 'delete_product'),
-    path('salir/', salir, name = 'salir'),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('', include('Products.urls'))
     ]
